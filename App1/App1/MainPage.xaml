@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App1"
+             x:Class="App1.MainPage"
+             Title="MainPage"
+             >
+
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="换肤" Priority="0"
+                 Command="{Binding ChangeThemeCmd}"
+                 IsDestructive="True"
+                 />
+  </ContentPage.ToolbarItems>
+
+
+  <ScrollView>
+
+    <StackLayout>
+
+      <local:Marquee ItemsSource="{Binding Msgs}" HeightRequest="30">
+        <local:Marquee.ItemTemplate>
+          <DataTemplate>
+            <Label Text="{Binding}"
+                   LineBreakMode="TailTruncation"
+                   VerticalTextAlignment="Center"/>
+          </DataTemplate>
+        </local:Marquee.ItemTemplate>
+      </local:Marquee>
+
+      <Label Text="Label Header" StyleClass="Header"/>
+      <Label Text="Label SubHeader" StyleClass="Subheader"/>
+      <Label Text="Label Body" StyleClass="Body"/>
+      <Label Text="Label Link" StyleClass="Link"/>
+      <Label Text="Label Inverse" StyleClass="Inverse"/>
+
+      <Button Text="Button Default" Command="{Binding NugetListCmd}" />
+      <Button Text="Button Class Default" StyleClass="Default" />
+      <Button Text="Button Class Primary" StyleClass="Primary" />
+      <Button Text="Button Class Success" StyleClass="Success" />
+      <Button Text="Button Class Info" StyleClass="Info" />
+      <Button Text="Button Class Warning" StyleClass="Warning" />
+      <Button Text="Button Class Danger" StyleClass="Danger" />
+      <Button Text="Button Class Link" StyleClass="Link" />
+
+      <BoxView WidthRequest="100" HeightRequest="100" StyleClass="HorizontalRule" />
+      <BoxView WidthRequest="100" HeightRequest="100" StyleClass="Circle" />
+      <BoxView WidthRequest="100" HeightRequest="100" StyleClass="Rounded" />
+
+    </StackLayout>
+
+  </ScrollView>
+
+</ContentPage>
