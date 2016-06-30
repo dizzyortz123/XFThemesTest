@@ -56,73 +56,84 @@
         <Label Text="更多" Margin="5" Grid.Column="3" VerticalOptions="Center" />
       </Grid>
 
-      <Grid Margin="5" ColumnSpacing="2" RotationX="30">
+      <Grid>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="auto" />
           <ColumnDefinition />
-          <ColumnDefinition Width="auto" />
-          <ColumnDefinition Width="auto" />
+          <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <BoxView Grid.Column="0" Grid.ColumnSpan="4"
-                 HorizontalOptions="Fill"
-                 StyleClass="Rounded" BackgroundColor="White"/>
+        <Grid Grid.Column="0" Margin="5" ColumnSpacing="2" RotationX="30">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+          </Grid.ColumnDefinitions>
 
-        <Label Text="小道消息" Margin="5" Grid.Column="0" VerticalOptions="Center" />
+          <BoxView Grid.Column="0" Grid.ColumnSpan="4"
+                   HorizontalOptions="Fill"
+                   StyleClass="Rounded" BackgroundColor="White"/>
 
-        <local:Marquee Grid.Column="1"
-                       ItemsSource="{Binding Msgs}"
-                       HeightRequest="30"
+          <Label Text="小道消息" Margin="5" Grid.Column="0" VerticalOptions="Center" />
+
+          <local:Marquee Grid.Column="1"
+                         ItemsSource="{Binding Msgs}"
+                         HeightRequest="30"
                        >
-          <local:Marquee.ItemTemplate>
-            <DataTemplate>
-              <Label Text="{Binding}"
-                     VerticalTextAlignment="Center"
-                     LineBreakMode="TailTruncation" />
-            </DataTemplate>
-          </local:Marquee.ItemTemplate>
-        </local:Marquee>
+            <local:Marquee.ItemTemplate>
+              <DataTemplate>
+                <Label Text="{Binding}"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="TailTruncation" />
+              </DataTemplate>
+            </local:Marquee.ItemTemplate>
+          </local:Marquee>
 
-        <BoxView WidthRequest="0.5"
-                 HeightRequest="15"
-                 VerticalOptions="Center"
-                 Grid.Column="2" BackgroundColor="Gray" />
-        <Label Text="更多" Margin="5" Grid.Column="3" VerticalOptions="Center" />
+          <BoxView WidthRequest="0.5"
+                   HeightRequest="15"
+                   VerticalOptions="Center"
+                   Grid.Column="2" BackgroundColor="Gray" />
+          <Label Text="更多" Margin="5" Grid.Column="3" VerticalOptions="Center" />
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="5" ColumnSpacing="2"
+              RotationX="30" RotationY="10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+          </Grid.ColumnDefinitions>
+
+          <BoxView Grid.Column="0" Grid.ColumnSpan="4"
+                   HorizontalOptions="Fill"
+                   StyleClass="Rounded" BackgroundColor="White"/>
+
+          <Label Text="小道消息" Margin="5" Grid.Column="0" VerticalOptions="Center" />
+
+          <local:Marquee Grid.Column="1"
+                         ItemsSource="{Binding Msgs}"
+                         HeightRequest="30"
+                         Interval="4000">
+            <local:Marquee.ItemTemplate>
+              <DataTemplate>
+                <Label Text="{Binding}"
+                       VerticalTextAlignment="Center"
+                       LineBreakMode="TailTruncation" />
+              </DataTemplate>
+            </local:Marquee.ItemTemplate>
+          </local:Marquee>
+
+          <BoxView WidthRequest="0.5"
+                   HeightRequest="15"
+                   VerticalOptions="Center"
+                   Grid.Column="2" BackgroundColor="Gray" />
+          <Label Text="更多" Margin="5" Grid.Column="3" VerticalOptions="Center" />
+        </Grid>
+
       </Grid>
 
-      <Grid Margin="5" ColumnSpacing="2" RotationX="30" RotationY="30">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="auto" />
-          <ColumnDefinition />
-          <ColumnDefinition Width="auto" />
-          <ColumnDefinition Width="auto" />
-        </Grid.ColumnDefinitions>
 
-        <BoxView Grid.Column="0" Grid.ColumnSpan="4"
-                 HorizontalOptions="Fill"
-                 StyleClass="Rounded" BackgroundColor="White"/>
-
-        <Label Text="小道消息" Margin="5" Grid.Column="0" VerticalOptions="Center" />
-
-        <local:Marquee Grid.Column="1"
-                       ItemsSource="{Binding Msgs}"
-                       HeightRequest="30"
-                       Interval="4000">
-          <local:Marquee.ItemTemplate>
-            <DataTemplate>
-              <Label Text="{Binding}"
-                     VerticalTextAlignment="Center"
-                     LineBreakMode="TailTruncation" />
-            </DataTemplate>
-          </local:Marquee.ItemTemplate>
-        </local:Marquee>
-
-        <BoxView WidthRequest="0.5"
-                 HeightRequest="15"
-                 VerticalOptions="Center"
-                 Grid.Column="2" BackgroundColor="Gray" />
-        <Label Text="更多" Margin="5" Grid.Column="3" VerticalOptions="Center" />
-      </Grid>
 
       <Label Text="Label Header" StyleClass="Header"/>
       <Label Text="Label SubHeader" StyleClass="Subheader"/>

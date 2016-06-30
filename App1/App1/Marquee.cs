@@ -182,7 +182,7 @@ namespace App1 {
             view.VerticalOptions = LayoutOptions.CenterAndExpand;
             view.HorizontalOptions = LayoutOptions.StartAndExpand;
             ////父容器的可视范围之外
-            //view.Layout(new Rectangle(0, -this.Bounds.Height, this.Bounds.Width, this.Bounds.Height));
+            view.Layout(new Rectangle(0, -this.Bounds.Height, this.Bounds.Width, this.Bounds.Height));
         }
 
         private void InitCollection(INotifyCollectionChanged collection) {

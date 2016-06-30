@@ -56,24 +56,24 @@ namespace App1 {
             }
         }
 
-        protected override void OnAppearing() {
-            base.OnAppearing();
+        //protected override void OnAppearing() {
+        //    base.OnAppearing();
 
-            var url = $"http://evolve.xamarin.com/session/1";
+        //    var url = $"http://evolve.xamarin.com/session/1";
 
-            var entry = new AppLinkEntry {
-                Title = "What ??",
-                Description = "What ???",
-                AppLinkUri = new Uri(url, UriKind.RelativeOrAbsolute),
-                IsLinkActive = true,
-                Thumbnail = ImageSource.FromFile("Icon.png")
-            };
+        //    var entry = new AppLinkEntry {
+        //        Title = "What ??",
+        //        Description = "What ???",
+        //        AppLinkUri = new Uri(url, UriKind.RelativeOrAbsolute),
+        //        IsLinkActive = true,
+        //        Thumbnail = ImageSource.FromFile("Icon.png")
+        //    };
 
-            entry.KeyValues.Add("contentType", "Session");
-            entry.KeyValues.Add("appName", "Evolve16");
-            entry.KeyValues.Add("companyName", "Xamarin");
+        //    entry.KeyValues.Add("contentType", "Session");
+        //    entry.KeyValues.Add("appName", "Evolve16");
+        //    entry.KeyValues.Add("companyName", "Xamarin");
 
-            Application.Current.AppLinks.RegisterLink(entry);
-        }
+        //    Application.Current.AppLinks.RegisterLink(entry);
+        //}
     }
 }
