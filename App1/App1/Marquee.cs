@@ -57,25 +57,25 @@ namespace App1 {
         }
         #endregion
 
-        #region Speed
-        public static readonly BindableProperty SpeedProperty =
-            BindableProperty.Create("Speed",
+        #region Interval
+        public static readonly BindableProperty IntervalProperty =
+            BindableProperty.Create("Interval",
                 typeof(int),
                 typeof(Marquee),
                 3000);
 
-        public int Speed {
+        public int Interval {
             get {
-                return (int)this.GetValue(SpeedProperty);
+                return (int)this.GetValue(IntervalProperty);
             }
             set {
-                this.SetValue(SpeedProperty, value);
+                this.SetValue(IntervalProperty, value);
             }
         }
         #endregion
 
-        private int _current = 0;
-        private int Current {
+        private int? _current = null;
+        private int? Current {
             get {
                 return this._current;
             }
@@ -84,54 +84,68 @@ namespace App1 {
             }
         }
 
+        private bool IsRunning = false;
+
         public Marquee() {
+            //可视范围之外的内容不可见
             this.IsClippedToBounds = true;
             this.ChildAdded += Marquee_ChildAdded;
-            this.Loop();
+            //this.Loop();
         }
 
-        private async void Animate(View view, bool isCurrent) {
-            if (isCurrent)
-                view.IsVisible = true;
+        private async Task Animate(View view, bool isCurrent) {
+            //if (isCurrent)
+            view.IsVisible = true;
 
             Rectangle beginRect = Rectangle.Zero;
             Rectangle endRect = Rectangle.Zero;
 
             if (isCurrent) {
-                beginRect = this.Bounds;
-                beginRect.Y += view.Height;
-
-                endRect = this.Bounds;
+                beginRect = new Rectangle(0, this.Bounds.Height, this.Bounds.Width, this.Bounds.Height);
+                endRect = new Rectangle(0, 0, this.Bounds.Width, this.Bounds.Height);
             } else {
-                beginRect = this.Bounds;
-                endRect = this.Bounds;
-                endRect.Y -= view.Height;
+                beginRect = new Rectangle(0, 0, this.Bounds.Width, this.Bounds.Height);
+                endRect = new Rectangle(0, -this.Bounds.Height, this.Bounds.Width, this.Bounds.Height);
             }
 
             view.Layout(beginRect);
             await view.LayoutTo(endRect, easing: Easing.Linear)
-                .ContinueWith(t => {
-                    view.IsVisible = isCurrent;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+            .ContinueWith(t => {
+                //BUG 会使填充失效
+                view.IsVisible = isCurrent;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void Loop() {
-            Device.StartTimer(TimeSpan.FromMilliseconds(this.Speed), () => {
-                if (this.Children.Count > 0) {
-                    var ele = this.Children[this.Current];
-                    this.Animate(ele, false);
+        private void Begin() {
+            if (this.IsRunning)
+                return;
+            else
+                this.Run();
+        }
 
+        private async void Run() {
+            if (this.Children.Count > 0) {
+                this.IsRunning = true;
+
+                if (this.Current.HasValue) {
+                    var outEle = this.Children[this.Current.Value];
+                    await this.Animate(outEle, false);
                     this.Current++;
-
-                    ele = this.Children[this.Current];
-                    this.Animate(ele, true);
+                } else {
+                    this.Current = 0;
                 }
-                return true;
-            });
+
+                var inEle = this.Children[this.Current.Value];
+                await this.Animate(inEle, true);
+            }
+
+            await Task.Delay(this.Interval)
+                    .ContinueWith(t => this.Run(), TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void Marquee_ChildAdded(object sender, ElementEventArgs e) {
             this.InitChildView((View)e.Element);
+            this.Begin();
         }
 
         private void UpdateChildren() {
@@ -165,10 +179,10 @@ namespace App1 {
 
         private void InitChildView(View view) {
             view.IsVisible = false;
-            view.VerticalOptions = LayoutOptions.Center;
-            view.Layout(this.Bounds);
-            //AbsoluteLayout.SetLayoutBounds(view, new Rectangle(0, 1, view.Width, view.Height));
-            AbsoluteLayout.SetLayoutFlags(view, AbsoluteLayoutFlags.PositionProportional);
+            view.VerticalOptions = LayoutOptions.CenterAndExpand;
+            view.HorizontalOptions = LayoutOptions.StartAndExpand;
+            ////父容器的可视范围之外
+            //view.Layout(new Rectangle(0, -this.Bounds.Height, this.Bounds.Width, this.Bounds.Height));
         }
 
         private void InitCollection(INotifyCollectionChanged collection) {
